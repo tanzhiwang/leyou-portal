@@ -246,7 +246,7 @@ Date.prototype.format = function (format) {
 var has = Object.prototype.hasOwnProperty;
 
 var defaults = {
-    allowDots: true,//这个属性修改为true
+    allowDots: true,
     allowPrototypes: false,
     arrayLimit: 20,
     decoder: utils.decode,
@@ -534,9 +534,6 @@ const ly = leyou = {
      * 发起ajax请求工具，底层依然是axios
      */
     http: axios,
-    verifyUser() {
-        return ly.http("auth/verify");
-    },
     store: {
         set(key, value) {
             localStorage.setItem(key, JSON.stringify(value));

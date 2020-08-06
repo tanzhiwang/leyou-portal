@@ -1,3 +1,4 @@
+
 // 字符串格式化
 String.prototype.format = function () {
     const args = arguments;
@@ -45,7 +46,8 @@ const utils = {
                 item.obj[item.prop] = compacted;
             }
         }
-
+        console.log(obj)//-------调试用，待删---------
+        alert("最终的obj")//-------调试用，待删---------
         return obj;
     },
     decode(str) {
@@ -246,7 +248,7 @@ Date.prototype.format = function (format) {
 var has = Object.prototype.hasOwnProperty;
 
 var defaults = {
-    allowDots: true,//这个属性修改为true
+    allowDots: false,
     allowPrototypes: false,
     arrayLimit: 20,
     decoder: utils.decode,
@@ -410,10 +412,12 @@ const parse = function (str, opts) {
         var newObj = parseKeys(key, tempObj[key], options);
         obj = utils.merge(obj, newObj, options);
     }
-
     return utils.compact(obj);
 };
 const stringify = function(object, options) {
+    console.log("stringify");
+    console.log(object);
+    console.log(options);
     let option =  {
         prefix : "",
         generateArrayPrefix : utils.generateArrayPrefix,
@@ -426,11 +430,12 @@ const stringify = function(object, options) {
         serializeDate: null,
         formatter : utils.formatter,
         encodeValuesOnly: true
-    }
+    };
     Object.assign(option, options);
+
     let {prefix, generateArrayPrefix, strictNullHandling, skipNulls, encoder, filter,
         sort, allowDots, serializeDate, formatter, encodeValuesOnly} = option;
-
+    console.log(option);
     var obj = object;
     if (typeof filter === 'function') {
         obj = filter(prefix, obj);
@@ -479,31 +484,31 @@ const stringify = function(object, options) {
             values = values.concat(this.stringify(
                 obj[key],
                 {prefix:generateArrayPrefix(prefix, key),
-                    generateArrayPrefix,
-                    strictNullHandling,
-                    skipNulls,
-                    encoder,
-                    filter,
-                    sort,
-                    allowDots,
-                    serializeDate,
-                    formatter,
-                    encodeValuesOnly}
+                generateArrayPrefix,
+                strictNullHandling,
+                skipNulls,
+                encoder,
+                filter,
+                sort,
+                allowDots,
+                serializeDate,
+                formatter,
+                encodeValuesOnly}
             ));
         } else {
             values = values.concat(this.stringify(
                 obj[key],
                 {prefix:prefix + (allowDots ? '.' + key : '[' + key + ']'),
-                    generateArrayPrefix,
-                    strictNullHandling,
-                    skipNulls,
-                    encoder,
-                    filter,
-                    sort,
-                    allowDots,
-                    serializeDate,
-                    formatter,
-                    encodeValuesOnly}
+                generateArrayPrefix,
+                strictNullHandling,
+                skipNulls,
+                encoder,
+                filter,
+                sort,
+                allowDots,
+                serializeDate,
+                formatter,
+                encodeValuesOnly}
             ));
         }
     }
@@ -534,9 +539,6 @@ const ly = leyou = {
      * 发起ajax请求工具，底层依然是axios
      */
     http: axios,
-    verifyUser() {
-        return ly.http("auth/verify");
-    },
     store: {
         set(key, value) {
             localStorage.setItem(key, JSON.stringify(value));
